@@ -34,7 +34,7 @@ type Layer struct {
 }
 
 type SoilProfile struct {
-	Layers       Layer
+	Layers       []Layer
 	gwt          float64
 	checkGwt     bool
 	densityUnit  string
