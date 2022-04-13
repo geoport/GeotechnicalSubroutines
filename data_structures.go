@@ -1,5 +1,6 @@
 package GeotechnicalSubroutines
 
+// Layer is a struct that contains the properties of single layer of a soil profile
 type Layer struct {
 	soilClass           string
 	soilType            string
@@ -31,6 +32,7 @@ type Layer struct {
 	dampingRatio        float64
 }
 
+// SoilProfile is a struct that contains the properties of a soil profile
 type SoilProfile struct {
 	Layers       []Layer
 	gwt          float64
