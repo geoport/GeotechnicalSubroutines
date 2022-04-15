@@ -1,2 +1,2 @@
-gonum.org/v1/gonum v0.11.0 h1:f1IJhK4Km5tBJmaiJXtk/PkL4cdVX6J+tGiM187uT5E=
-gonum.org/v1/gonum v0.11.0/go.mod h1:fSG4YDCxxUZQJ7rKsQrj0gMOg00Il0Z96/qMA4bVQhA=
+github.com/geoport/numpy4go v0.1.1 h1:PgKr6k2BuVLinlyBssBPZy332iuwYbwggYkh6w1rKWM=
+github.com/geoport/numpy4go v0.1.1/go.mod h1:mGMxV+v8XNDp0s6Sk1mXzJZ9frz5f1H0i7OZumZt5eU=
