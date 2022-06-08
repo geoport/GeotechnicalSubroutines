@@ -40,7 +40,7 @@ func TestLayer_SelectSoilClass(t *testing.T) {
 }
 
 func TestGetLayerDepths(t *testing.T) {
-	outputLayerDepths := soilProfile.getLayerDepths()
+	outputLayerDepths := soilProfile.GetLayerDepths()
 	expectedLayerDepths := []float64{1, 2.4, 5.8}
 
 	if reflect.DeepEqual(outputLayerDepths, expectedLayerDepths) == false {
@@ -49,7 +49,7 @@ func TestGetLayerDepths(t *testing.T) {
 }
 
 func TestGetLayerCenters(t *testing.T) {
-	outputLayerCenters := soilProfile.getLayerCenters()
+	outputLayerCenters := soilProfile.GetLayerCenters()
 	expectedLayerCenters := []float64{0.5, 1.7, 4.1}
 
 	if reflect.DeepEqual(outputLayerCenters, expectedLayerCenters) == false {
@@ -62,7 +62,7 @@ func TestGetLayerIndex(t *testing.T) {
 	expectedOutputs := []int{0, 1, 2, 2}
 
 	for i, inp := range testInputs {
-		output := soilProfile.getLayerIndex(inp)
+		output := soilProfile.GetLayerIndex(inp)
 		if output != expectedOutputs[i] {
 			t.Errorf("Expected %v, got %v", expectedOutputs[i], output)
 		}
@@ -71,7 +71,7 @@ func TestGetLayerIndex(t *testing.T) {
 
 func TestGetPropFloat(t *testing.T) {
 	expectedOutputs := []float64{1, 1.4, 3.4}
-	output := soilProfile.getPropFloat("Thickness")
+	output := soilProfile.GetPropFloat("Thickness")
 
 	if reflect.DeepEqual(output, expectedOutputs) == false {
 		t.Errorf("Expected %v, got %v", expectedOutputs, output)
@@ -81,7 +81,7 @@ func TestGetPropFloat(t *testing.T) {
 
 func TestGetPropString(t *testing.T) {
 	expectedOutputs := []string{"SC", "SP", "SM"}
-	output := soilProfile.getPropString("" +
+	output := soilProfile.GetPropString("" +
 		"SoilClass")
 
 	if reflect.DeepEqual(output, expectedOutputs) == false {
@@ -102,9 +102,9 @@ func TestCalcNormalStress(t *testing.T) {
 	expectedOutputs2 := []float64{0, 1.9, 2.95, 6.16, 17.16}
 	expectedOutputs3 := []float64{0, 1.8, 2.65, 5.32, 14.82}
 
-	output1 := np.Apply(checkPoints, SP1.calcNormalStress)
-	output2 := np.Apply(checkPoints, SP2.calcNormalStress)
-	output3 := np.Apply(checkPoints, SP3.calcNormalStress)
+	output1 := np.Apply(checkPoints, SP1.CalcNormalStress)
+	output2 := np.Apply(checkPoints, SP2.CalcNormalStress)
+	output3 := np.Apply(checkPoints, SP3.CalcNormalStress)
 
 	if reflect.DeepEqual(np.Round(output1, 2), expectedOutputs1) == false {
 		t.Errorf("Expected %v, got %v", expectedOutputs1, output1)
@@ -125,7 +125,7 @@ func TestEffectiveStress(t *testing.T) {
 
 	expectedOutputs := []float64{0.9, 2.36}
 
-	output := np.Apply(checkPoints, SP.calcEffectiveStress)
+	output := np.Apply(checkPoints, SP.CalcEffectiveStress)
 
 	if reflect.DeepEqual(np.Round(output, 2), expectedOutputs) == false {
 		t.Errorf("Expected %v, got %v", expectedOutputs, output)

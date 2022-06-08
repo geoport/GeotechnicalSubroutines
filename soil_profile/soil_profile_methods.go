@@ -21,8 +21,8 @@ func (L *Layer) SelectSoilClass() {
 	}
 }
 
-//getLayerDepths returns the level of bottom of each layer in the soil profile
-func (sp *SoilProfile) getLayerDepths() []float64 {
+//GetLayerDepths returns the level of bottom of each layer in the soil profile
+func (sp *SoilProfile) GetLayerDepths() []float64 {
 	var depths []float64
 
 	for i, layer := range sp.Layers {
@@ -36,11 +36,11 @@ func (sp *SoilProfile) getLayerDepths() []float64 {
 	return depths
 }
 
-//getLayerCenters returns the center level of each layer in the soil profile
-func (sp *SoilProfile) getLayerCenters() []float64 {
+//GetLayerCenters returns the center level of each layer in the soil profile
+func (sp *SoilProfile) GetLayerCenters() []float64 {
 	var centers []float64
 	var center float64
-	depths := sp.getLayerDepths()
+	depths := sp.GetLayerDepths()
 
 	for i, depth := range depths {
 		if i == 0 {
@@ -54,9 +54,9 @@ func (sp *SoilProfile) getLayerCenters() []float64 {
 	return centers
 }
 
-// getLayerIndex returns the index of the layer that contains the given depth
-func (sp *SoilProfile) getLayerIndex(depth float64) int {
-	layerDepths := sp.getLayerDepths()
+// GetLayerIndex returns the index of the layer that contains the given depth
+func (sp *SoilProfile) GetLayerIndex(depth float64) int {
+	layerDepths := sp.GetLayerDepths()
 	if len(layerDepths) == 1 || depth <= layerDepths[0] {
 		return 0
 	} else if depth >= layerDepths[len(layerDepths)-1] {
@@ -77,8 +77,8 @@ func (sp *SoilProfile) getLayerIndex(depth float64) int {
 	return 0
 }
 
-// getPropFloat returns the property values of all the layers as float
-func (sp *SoilProfile) getPropFloat(prop string) []float64 {
+// GetPropFloat returns the property values of all the layers as float
+func (sp *SoilProfile) GetPropFloat(prop string) []float64 {
 	var props []float64
 	for _, layer := range sp.Layers {
 		r := reflect.ValueOf(layer)
@@ -88,8 +88,8 @@ func (sp *SoilProfile) getPropFloat(prop string) []float64 {
 	return props
 }
 
-// getPropString returns the property values of all the layers as string
-func (sp *SoilProfile) getPropString(prop string) []string {
+// GetPropString returns the property values of all the layers as string
+func (sp *SoilProfile) GetPropString(prop string) []string {
 	var props []string
 	for _, layer := range sp.Layers {
 		r := reflect.ValueOf(layer)
@@ -99,13 +99,13 @@ func (sp *SoilProfile) getPropString(prop string) []string {
 	return props
 }
 
-// calcNormalStress returns the normal stress at the given depth
-func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
+// CalcNormalStress returns the normal stress at the given depth
+func (sp *SoilProfile) CalcNormalStress(depth float64) float64 {
 	Stresses := []float64{0}
-	gammaDry := sp.getPropFloat("DryUnitWeight")
-	gammaSaturated := sp.getPropFloat("SaturatedUnitWeight")
-	layerDepths := sp.getLayerDepths()
-	layerIndex := sp.getLayerIndex(depth)
+	gammaDry := sp.GetPropFloat("DryUnitWeight")
+	gammaSaturated := sp.GetPropFloat("SaturatedUnitWeight")
+	layerDepths := sp.GetLayerDepths()
+	layerIndex := sp.GetLayerIndex(depth)
 
 	var H1, H0, H float64
 	for i := range np.Arange(0, float64(layerIndex+1), 1) {
@@ -136,8 +136,8 @@ func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
 }
 
 // calcEffectiveStress returns the effective stress at the given depth
-func (sp *SoilProfile) calcEffectiveStress(depth float64) float64 {
-	normalStress := sp.calcNormalStress(depth)
+func (sp *SoilProfile) CalcEffectiveStress(depth float64) float64 {
+	normalStress := sp.CalcNormalStress(depth)
 	if sp.Gwt >= depth {
 		return normalStress
 	} else {
