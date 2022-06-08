@@ -5,19 +5,19 @@ import (
 	"reflect"
 )
 
-//CalcPI calculates the plasticity index of a layer
+//CalcPI calculates the Plasticity index of a layer
 func (L *Layer) CalcPI() {
-	L.plasticityIndex = L.liquidLimit - L.plasticLimit
+	L.PlasticityIndex = L.LiquidLimit - L.PlasticLimit
 }
 
 //SelectSoilClass assigns selected soil class and soil definition to the Layer
 func (L *Layer) SelectSoilClass() {
-	if L.soilClass == "Diğer" {
-		L.soilClassSelected = L.soilClassManuel
-		L.soilDefinitionSelected = L.soilDefinitionManuel
+	if L.SoilClass == "Diğer" {
+		L.SoilClassSelected = L.SoilClassManuel
+		L.SoilDefinitionSelected = L.SoilDefinitionManuel
 	} else {
-		L.soilClassSelected = L.soilClass
-		L.soilDefinitionSelected = L.soilDefinition
+		L.SoilClassSelected = L.SoilClass
+		L.SoilDefinitionSelected = L.SoilDefinition
 	}
 }
 
@@ -27,9 +27,9 @@ func (sp *SoilProfile) getLayerDepths() []float64 {
 
 	for i, layer := range sp.Layers {
 		if i == 0 {
-			depths = append(depths, layer.thickness)
+			depths = append(depths, layer.Thickness)
 		} else {
-			depths = append(depths, depths[i-1]+layer.thickness)
+			depths = append(depths, depths[i-1]+layer.Thickness)
 		}
 	}
 
@@ -102,8 +102,8 @@ func (sp *SoilProfile) getPropString(prop string) []string {
 // calcNormalStress returns the normal stress at the given depth
 func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
 	Stresses := []float64{0}
-	gammaDry := sp.getPropFloat("dryUnitWeight")
-	gammaSaturated := sp.getPropFloat("saturatedUnitWeight")
+	gammaDry := sp.getPropFloat("DryUnitWeight")
+	gammaSaturated := sp.getPropFloat("SaturatedUnitWeight")
 	layerDepths := sp.getLayerDepths()
 	layerIndex := sp.getLayerIndex(depth)
 
@@ -121,12 +121,12 @@ func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
 			H0 = layerDepths[i-1]
 		}
 
-		if sp.gwt >= H1 {
+		if sp.Gwt >= H1 {
 			H = H1
-		} else if H0 >= sp.gwt {
+		} else if H0 >= sp.Gwt {
 			H = H0
 		} else {
-			H = sp.gwt
+			H = sp.Gwt
 		}
 
 		stress := (H-H0)*gammaDry[i] + gammaSaturated[i]*(H1-H)
@@ -138,9 +138,9 @@ func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
 // calcEffectiveStress returns the effective stress at the given depth
 func (sp *SoilProfile) calcEffectiveStress(depth float64) float64 {
 	normalStress := sp.calcNormalStress(depth)
-	if sp.gwt >= depth {
+	if sp.Gwt >= depth {
 		return normalStress
 	} else {
-		return normalStress - (depth-sp.gwt)*0.981
+		return normalStress - (depth-sp.Gwt)*0.981
 	}
 }
