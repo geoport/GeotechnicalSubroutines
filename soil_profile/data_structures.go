@@ -28,7 +28,7 @@ type Layer struct {
 	Cr                     float64
 	Cc                     float64
 	Gp                     float64
-	mv                     float64
+	Mv                     float64
 	VS                     float64
 	RQD                    float64
 	IS50                   float64
