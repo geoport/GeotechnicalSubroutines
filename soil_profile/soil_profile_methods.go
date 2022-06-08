@@ -1,9 +1,25 @@
-package GeotechnicalSubroutines
+package soil_profile
 
 import (
 	np "github.com/geoport/numpy4go/vectors"
 	"reflect"
 )
+
+//CalcPI calculates the plasticity index of a layer
+func (L *Layer) CalcPI() {
+	L.plasticityIndex = L.liquidLimit - L.plasticLimit
+}
+
+//SelectSoilClass assigns selected soil class and soil definition to the Layer
+func (L *Layer) SelectSoilClass() {
+	if L.soilClass == "Diğer" {
+		L.soilClassSelected = L.soilClassManuel
+		L.soilDefinitionSelected = L.soilDefinitionManuel
+	} else {
+		L.soilClassSelected = L.soilClass
+		L.soilDefinitionSelected = L.soilDefinition
+	}
+}
 
 //getLayerDepths returns the level of bottom of each layer in the soil profile
 func (sp *SoilProfile) getLayerDepths() []float64 {
@@ -46,15 +62,15 @@ func (sp *SoilProfile) getLayerIndex(depth float64) int {
 	} else if depth >= layerDepths[len(layerDepths)-1] {
 		return len(layerDepths) - 1
 	} else {
-		diff := np.IncrementBy(layerDepths, -depth)
-		for _, i := range np.Arange(1, len(layerDepths), 1) {
-			prevDiff := diff[i-1]
-			currDiff := diff[i]
+		diff := np.SumWith(layerDepths, -depth)
+		for _, i := range np.Arange(1, float64(len(layerDepths)), 1) {
+			prevDiff := diff[int(i-1)]
+			currDiff := diff[int(i)]
 			if currDiff == 0 {
-				return i
+				return int(i)
 			}
 			if prevDiff < 0 && currDiff > 0 {
-				return i
+				return int(i)
 			}
 		}
 	}
@@ -92,7 +108,7 @@ func (sp *SoilProfile) calcNormalStress(depth float64) float64 {
 	layerIndex := sp.getLayerIndex(depth)
 
 	var H1, H0, H float64
-	for _, i := range np.Arange(0, layerIndex+1, 1) {
+	for i := range np.Arange(0, float64(layerIndex+1), 1) {
 		if i == layerIndex {
 			H1 = depth
 		} else {

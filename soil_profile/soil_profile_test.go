@@ -1,4 +1,4 @@
-package GeotechnicalSubroutines
+package soil_profile
 
 import (
 	np "github.com/geoport/numpy4go/vectors"
@@ -9,10 +9,27 @@ import (
 var layer1 = Layer{thickness: 1, soilClass: "SC", dryUnitWeight: 1.8, saturatedUnitWeight: 2}
 var layer2 = Layer{thickness: 1.4, soilClass: "SP", dryUnitWeight: 1.7, saturatedUnitWeight: 2.1}
 var layer3 = Layer{thickness: 3.4, soilClass: "SM", dryUnitWeight: 1.9, saturatedUnitWeight: 2.2}
+var layer4 = Layer{soilClass: "Diğer", liquidLimit: 10, plasticLimit: 4, soilClassManuel: "SC", soilDefinitionManuel: "Kil"}
 
 var soilProfile = SoilProfile{
 	Layers: []Layer{layer1, layer2, layer3},
 	gwt:    1,
+}
+
+func TestCalcPI(t *testing.T) {
+	layer4.CalcPI()
+	expected := 6.0
+	if expected != layer4.plasticityIndex {
+		t.Errorf("Expected %v, got %v", expected, layer4.plasticityIndex)
+	}
+}
+
+func TestLayer_SelectSoilClass(t *testing.T) {
+	layer4.SelectSoilClass()
+	expected := "SC"
+	if expected != layer4.soilClassSelected {
+		t.Errorf("Expected %v, got %v", expected, layer4.soilClassSelected)
+	}
 }
 
 func TestGetLayerDepths(t *testing.T) {

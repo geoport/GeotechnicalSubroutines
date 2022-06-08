@@ -1,2 +1,4 @@
 github.com/geoport/numpy4go v0.1.1 h1:PgKr6k2BuVLinlyBssBPZy332iuwYbwggYkh6w1rKWM=
 github.com/geoport/numpy4go v0.1.1/go.mod h1:mGMxV+v8XNDp0s6Sk1mXzJZ9frz5f1H0i7OZumZt5eU=
+github.com/geoport/numpy4go v0.1.12 h1:JsLx9sfP3GCPaUg8ontrVphTlb5g2Y0zzE0NbMqWsqI=
+github.com/geoport/numpy4go v0.1.12/go.mod h1:mGMxV+v8XNDp0s6Sk1mXzJZ9frz5f1H0i7OZumZt5eU=
