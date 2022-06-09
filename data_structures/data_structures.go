@@ -28,7 +28,7 @@ type SoilProfile struct {
 	DryUnitWeight          []float64 `json:"dry_unit_weight"`
 	SaturatedUnitWeight    []float64 `json:"saturated_unit_weight"`
 	FineContent            []float64 `json:"fine_content"`
-	LiquidLimit            []float64 `json:"liquidLimit"`
+	LiquidLimit            []float64 `json:"liquid_limit"`
 	PlasticLimit           []float64 `json:"plastic_limit"`
 	PlasticityIndex        []float64 `json:"plasticity_index"`
 	Cu                     []float64 `json:"Cu"`
