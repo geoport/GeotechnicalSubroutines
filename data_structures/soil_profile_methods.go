@@ -95,3 +95,16 @@ func (sp *SoilProfile) CalcEffectiveStress(depth float64) float64 {
 		return normalStress - (depth-sp.Gwt)*0.981
 	}
 }
+
+// IsCohesive returns true if the soil class of the layer at given depth is cohesive
+func (sp *SoilProfile) IsCohesive(depth float64) bool {
+	cohesiveSoils := []string{"SW-SC", "SP-SC", "SC", "SC-SM", "CL", "CL-ML", "CH,OH"}
+	layerIndex := sp.GetLayerIndex(depth)
+	soilClass := sp.SoilClass[layerIndex]
+	for _, cohesiveSoil := range cohesiveSoils {
+		if soilClass == cohesiveSoil {
+			return true
+		}
+	}
+	return false
+}
