@@ -2,38 +2,11 @@ package soil_profile
 
 import (
 	np "github.com/geoport/numpy4go/vectors"
-	"reflect"
 )
-
-//CalcPI calculates the Plasticity index of a layer
-func (L *Layer) CalcPI() {
-	L.PlasticityIndex = L.LiquidLimit - L.PlasticLimit
-}
-
-//SelectSoilClass assigns selected soil class and soil definition to the Layer
-func (L *Layer) SelectSoilClass() {
-	if L.SoilClass == "Diğer" {
-		L.SoilClassSelected = L.SoilClassManuel
-		L.SoilDefinitionSelected = L.SoilDefinitionManuel
-	} else {
-		L.SoilClassSelected = L.SoilClass
-		L.SoilDefinitionSelected = L.SoilDefinition
-	}
-}
 
 //GetLayerDepths returns the level of bottom of each layer in the soil profile
 func (sp *SoilProfile) GetLayerDepths() []float64 {
-	var depths []float64
-
-	for i, layer := range sp.Layers {
-		if i == 0 {
-			depths = append(depths, layer.Thickness)
-		} else {
-			depths = append(depths, depths[i-1]+layer.Thickness)
-		}
-	}
-
-	return depths
+	return np.Cumsum(sp.Thickness)
 }
 
 //GetLayerCenters returns the center level of each layer in the soil profile
@@ -77,33 +50,11 @@ func (sp *SoilProfile) GetLayerIndex(depth float64) int {
 	return 0
 }
 
-// GetPropFloat returns the property values of all the layers as float
-func (sp *SoilProfile) GetPropFloat(prop string) []float64 {
-	var props []float64
-	for _, layer := range sp.Layers {
-		r := reflect.ValueOf(layer)
-		f := reflect.Indirect(r).FieldByName(prop)
-		props = append(props, f.Float())
-	}
-	return props
-}
-
-// GetPropString returns the property values of all the layers as string
-func (sp *SoilProfile) GetPropString(prop string) []string {
-	var props []string
-	for _, layer := range sp.Layers {
-		r := reflect.ValueOf(layer)
-		f := reflect.Indirect(r).FieldByName(prop)
-		props = append(props, f.String())
-	}
-	return props
-}
-
 // CalcNormalStress returns the normal stress at the given depth
 func (sp *SoilProfile) CalcNormalStress(depth float64) float64 {
 	Stresses := []float64{0}
-	gammaDry := sp.GetPropFloat("DryUnitWeight")
-	gammaSaturated := sp.GetPropFloat("SaturatedUnitWeight")
+	gammaDry := sp.DryUnitWeight
+	gammaSaturated := sp.SaturatedUnitWeight
 	layerDepths := sp.GetLayerDepths()
 	layerIndex := sp.GetLayerIndex(depth)
 

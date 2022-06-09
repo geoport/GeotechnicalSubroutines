@@ -6,37 +6,12 @@ import (
 	"testing"
 )
 
-var layer1 = Layer{Thickness: 1,
-	SoilClass: "SC", DryUnitWeight: 1.8, SaturatedUnitWeight: 2}
-var layer2 = Layer{Thickness: 1.4,
-	SoilClass: "SP", DryUnitWeight: 1.7, SaturatedUnitWeight: 2.1}
-var layer3 = Layer{Thickness: 3.4,
-	SoilClass: "SM", DryUnitWeight: 1.9, SaturatedUnitWeight: 2.2}
-var layer4 = Layer{
-	SoilClass: "Diğer", LiquidLimit: 10, PlasticLimit: 4,
-	SoilClassManuel: "SC", SoilDefinitionManuel: "Kil"}
-
 var soilProfile = SoilProfile{
-	Layers: []Layer{layer1, layer2, layer3},
-	Gwt:    1,
-}
-
-func TestCalcPI(t *testing.T) {
-	layer4.CalcPI()
-	expected := 6.0
-	if expected != layer4.PlasticityIndex {
-		t.Errorf("Expected %v, got %v", expected, layer4.PlasticityIndex)
-	}
-}
-
-func TestLayer_SelectSoilClass(t *testing.T) {
-	layer4.SelectSoilClass()
-	expected := "SC"
-	if expected != layer4.
-		SoilClassSelected {
-		t.Errorf("Expected %v, got %v", expected, layer4.
-			SoilClassSelected)
-	}
+	SoilClass:           []string{"SC", "SP", "SM"},
+	DryUnitWeight:       []float64{1.8, 1.7, 1.9},
+	SaturatedUnitWeight: []float64{2, 2.1, 2.2},
+	Thickness:           []float64{1, 1.4, 3.4},
+	Gwt:                 1,
 }
 
 func TestGetLayerDepths(t *testing.T) {
@@ -69,32 +44,12 @@ func TestGetLayerIndex(t *testing.T) {
 	}
 }
 
-func TestGetPropFloat(t *testing.T) {
-	expectedOutputs := []float64{1, 1.4, 3.4}
-	output := soilProfile.GetPropFloat("Thickness")
-
-	if reflect.DeepEqual(output, expectedOutputs) == false {
-		t.Errorf("Expected %v, got %v", expectedOutputs, output)
-	}
-
-}
-
-func TestGetPropString(t *testing.T) {
-	expectedOutputs := []string{"SC", "SP", "SM"}
-	output := soilProfile.GetPropString("" +
-		"SoilClass")
-
-	if reflect.DeepEqual(output, expectedOutputs) == false {
-		t.Errorf("Expected %v, got %v", expectedOutputs, output)
-	}
-
-}
-
 func TestCalcNormalStress(t *testing.T) {
-	layers := []Layer{layer1, layer2, layer3}
-	SP1 := SoilProfile{Layers: layers, Gwt: 1}
-	SP2 := SoilProfile{Layers: layers, Gwt: 0.5}
-	SP3 := SoilProfile{Layers: layers, Gwt: 10}
+	SP1 := soilProfile
+	SP2 := soilProfile
+	SP2.Gwt = 0.5
+	SP3 := soilProfile
+	SP3.Gwt = 10
 
 	checkPoints := []float64{0, 1, 1.5, 3, 8}
 
@@ -118,9 +73,7 @@ func TestCalcNormalStress(t *testing.T) {
 }
 
 func TestEffectiveStress(t *testing.T) {
-	layers := []Layer{layer1, layer2, layer3}
-	SP := SoilProfile{Layers: layers, Gwt: 1}
-
+	SP := soilProfile
 	checkPoints := []float64{0.5, 1.5}
 
 	expectedOutputs := []float64{0.9, 2.36}
