@@ -1,4 +1,4 @@
-package soil_profile
+package data_structures
 
 import (
 	np "github.com/geoport/numpy4go/vectors"

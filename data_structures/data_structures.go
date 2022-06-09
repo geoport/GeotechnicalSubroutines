@@ -1,4 +1,4 @@
-package soil_profile
+package data_structures
 
 type RequestData struct {
 	SoilProfile  SoilProfile    `json:"soil_profile"`
@@ -14,7 +14,7 @@ type FieldTestsData struct {
 	PS  PressureMeterData `json:"PSLog"`
 }
 
-// SoilData is a struct that contains the properties of a soil profile
+// SoilProfile is a struct that contains the properties of a soil profile
 type SoilProfile struct {
 	SoilClass              []string  `json:"soil_class"`
 	SoilClassManuel        []string  `json:"soil_class_manuel"`
