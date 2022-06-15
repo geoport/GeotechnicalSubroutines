@@ -2,4 +2,4 @@ module github.com/geoport/GeotechnicalSubroutines
 
 go 1.18
 
-require github.com/geoport/numpy4go v0.1.12 // indirect
+require github.com/geoport/numpy4go v0.1.16 // indirect

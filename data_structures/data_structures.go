@@ -16,42 +16,42 @@ type FieldTestsData struct {
 
 // SoilProfile is a struct that contains the properties of a soil profile
 type SoilProfile struct {
-	SoilClass              []string  `json:"soil_class"`
-	SoilClassManuel        []string  `json:"soil_class_manuel"`
-	SoilClassSelected      []string  `json:"soil_class_selected"`
-	SoilType               []string  `json:"soil_type"`
-	SoilDefinition         []string  `json:"soil_definition"`
-	SoilDefinitionManuel   []string  `json:"soil_definition_manuel"`
-	SoilDefinitionSelected []string  `json:"soil_definition_selected"`
-	MaterialType           []string  `json:"material_type"`
-	Thickness              []float64 `json:"thickness"`
-	DryUnitWeight          []float64 `json:"dry_unit_weight"`
-	SaturatedUnitWeight    []float64 `json:"saturated_unit_weight"`
-	FineContent            []float64 `json:"fine_content"`
-	LiquidLimit            []float64 `json:"liquid_limit"`
-	PlasticLimit           []float64 `json:"plastic_limit"`
-	PlasticityIndex        []float64 `json:"plasticity_index"`
-	Cu                     []float64 `json:"Cu"`
-	Cohesion               []float64 `json:"cohesion"`
-	Phi                    []float64 `json:"phi"`
-	WaterContent           []float64 `json:"water_content"`
-	PoissonRatio           []float64 `json:"poisson_ratio"`
-	ElasticModulus         []float64 `json:"elastic_modulus"`
-	ShearModulus           []float64 `json:"shear_modulus"`
-	VoidRatio              []float64 `json:"void_ratio"`
-	Cr                     []float64 `json:"Cr"`
-	Cc                     []float64 `json:"Cc"`
-	Gp                     []float64 `json:"Gp"`
-	Mv                     []float64 `json:"mv"`
-	VS                     []float64 `json:"VS"`
-	RQD                    []float64 `json:"RQD"`
-	IS50                   []float64 `json:"IS50"`
-	Kp                     []float64 `json:"Kp"`
-	DampingRatio           []float64 `json:"damping"`
-	Gwt                    float64   `json:"gwt"`
-	CheckGwt               bool      `json:"check_gwt"`
-	DensityUnit            string    `json:"density_unit"`
-	PressureUnit           string    `json:"pressure_unit"`
+	SoilClass           []string  `json:"soil_class"`
+	SoilType            []string  `json:"soil_type"`
+	SoilDefinition      []string  `json:"soil_definition"`
+	MaterialType        []string  `json:"material_type"`
+	Thickness           []float64 `json:"thickness"`
+	DryUnitWeight       []float64 `json:"dry_unit_weight"`
+	SaturatedUnitWeight []float64 `json:"saturated_unit_weight"`
+	FineContent         []float64 `json:"fine_content"`
+	LiquidLimit         []float64 `json:"liquid_limit"`
+	PlasticLimit        []float64 `json:"plastic_limit"`
+	PlasticityIndex     []float64 `json:"plasticity_index"`
+	Cu                  []float64 `json:"Cu"`
+	Cohesion            []float64 `json:"cohesion"`
+	Phi                 []float64 `json:"phi"`
+	WaterContent        []float64 `json:"water_content"`
+	PoissonRatio        []float64 `json:"poisson_ratio"`
+	ElasticModulus      []float64 `json:"elastic_modulus"`
+	ShearModulus        []float64 `json:"shear_modulus"`
+	VoidRatio           []float64 `json:"void_ratio"`
+	Cr                  []float64 `json:"Cr"`
+	Cc                  []float64 `json:"Cc"`
+	Gp                  []float64 `json:"Gp"`
+	Mv                  []float64 `json:"mv"`
+	VS                  []float64 `json:"VS"`
+	VP                  []float64 `json:"VP"`
+	SPT                 []int     `json:"SPT"`
+	ConeResistance      []float64 `json:"cone_resistance"` //for CPT
+	PorePressure        []float64 `json:"pore_pressure"`   //for CPT
+	RQD                 []float64 `json:"RQD"`
+	IS50                []float64 `json:"IS50"`
+	Kp                  []float64 `json:"Kp"`
+	DampingRatio        []float64 `json:"damping"`
+	Gwt                 float64   `json:"gwt"`
+	CheckGwt            bool      `json:"check_gwt"`
+	DensityUnit         string    `json:"density_unit"`
+	PressureUnit        string    `json:"pressure_unit"`
 }
 
 // BuildingData is a struct that contains the properties of a soil profile
@@ -81,7 +81,7 @@ type SPTData struct {
 	Cs         float64   `json:"Cs"`
 	Correction bool      `json:"Correction"`
 	Depth      []float64 `json:"Depth"`
-	N          []float64 `json:"N"`
+	N          []int     `json:"N"`
 }
 
 // CPTData is a struct that contains the properties of CPT log
